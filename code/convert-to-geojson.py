@@ -16,6 +16,7 @@ def js_to_object(text):
 def filename_to_meta(filename="http://valasztas.hu/dyn/pv14/map/oevk/M01/01/T001/011.js"):
 	meta = regex.search(filename).groupdict()
 	meta["id"] = filename.split("oevk/")[1].split(".")[0]
+	meta["url"] = "http://valasztas.hu/dyn/pv14/szavossz/hu/M%s/T%s/szkjkv_%s.html" % (meta["megye"], meta["telepules"], meta["szavazokor"])
 	return meta
 
 def object_to_feature(object, id, meta):
