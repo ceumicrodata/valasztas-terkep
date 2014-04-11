@@ -19,7 +19,7 @@ def filename_to_meta(filename="http://valasztas.hu/dyn/pv14/map/oevk/M01/01/T001
 	return meta
 
 def object_to_feature(object, id, meta):
-	points = [(float(item["lat"][0:7]), float(item["lng"][0:7])) for item in object["items"]]
+	points = [(float(item["lng"][0:7]), float(item["lat"][0:7])) for item in object["items"]]
 	return Feature(geometry=Polygon([points]), id=id, properties=meta)
 
 def filename_to_feature(filename):
