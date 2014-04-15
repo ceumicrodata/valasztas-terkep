@@ -29,11 +29,21 @@ def numeric_fields(dct):
 				dct[key] = int(dct[key])
 	return dct
 
+def listas_nyertes(dct):
+	listas = dict(fidesz=dct['fidesz'],
+				kormanyvaltok=dct['kormanyvaltok'],
+				jobbik=dct['jobbik'],
+				lmp=dct['lmp'])
+	legtobb_szavazat = max(listas.values())
+	return listas.keys()[listas.values().index(legtobb_szavazat)]
+
 if __name__ == '__main__':
 	output_list = []
 	geo_table = Searchable(list=json_file['features'], index_field='id')
 	for item in csv_file:
 		output = geo_table.search(item['id'])
-		output['properties'].update(numeric_fields(item))
+		item = numeric_fields(item)
+		item.update(dict(listas_nyertes=listas_nyertes(item)))
+		output['properties'].update(item)
 		output_list.append(output)
 	print json.dumps(dict(features=output_list, type='FeatureCollection'))
