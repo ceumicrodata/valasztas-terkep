@@ -1,13 +1,11 @@
 from urllib.request import urlopen
 import os, csv, re
 
-os.chdir('/Users/laszlosandor/Documents/githubcode/valasztas-terkep/consistent/')
-
 header = ('id','atjelentkezettek','oevk','szavazokor','szavazok','reszvetel','mcp','haza_nem_elado','sms','fkgp','udp','fidesz','sem','lmp','jesz','ump','munkaspart','szocdemek','kti','egyutt2014','zoldek','osszefogas','kormanyvaltok','jobbik','osszes_listas','egyeni_fidesz','egyeni_kormanyvaltok','egyeni_jobbik','egyeni_lmp')
 
-fin = open('/Users/laszlosandor/Documents/githubcode/valasztas-terkep/code/szavazokorok_results.txt','r')
+fin = open('szavazokorok_results.txt','r')
 
-fout = open('vote_counts_precincts.csv','w')
+fout = open('../consistent/vote_counts_precincts.csv','w')
 writer = csv.writer(fout)
 writer.writerow(header)
 
@@ -17,8 +15,8 @@ for rowin in fin:
     m2 = re.search('\d{3}(?=\.)', rowin)
     id = m1.group(0)+m2.group(0)
     atjelentkezettek = re.search('megszámlálására',html)!=None
-    oevk = re.search('.*(?=\.számú szavazókör)',html).group(0)
-    szavazokor = re.search('[A-Z].*(?=\.számú egyéni választókerületi szavazás)',html).group(0)
+    szavazokor = re.search('.*(?=\.számú szavazókör)',html).group(0)
+    oevk = re.search('[A-Z].*(?=\.számú egyéni választókerületi szavazás)',html).group(0)
     szavazok = re.search('(?<=<td>&nbsp;).*?(?=&nbsp;<br>[\d\.]* %)',html).group(0)
     reszvetel = re.search('[\d\.]*(?= %)',html).group(0)
     egyeni_fidesz = re.search('(?<=d>FIDESZ-KDNP</td>\s{3}<td style="text-align:right;">&nbsp;).*?(?=&nbsp;<)',html).group(0)

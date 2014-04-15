@@ -9,3 +9,6 @@ terkep-lista.txt: szavazokor-lista
 terkepek: terkep-lista.txt
 	wget -x -P ../raw/js -i terkep-lista.txt
 	touch $@
+
+../consistent/szavazokorok-szavazatokkal.geojson: ../consistent/vote_counts_precincts.csv ../consistent/szavazokorok.geojson merge-csv-to-geojson.py
+	python merge-csv-to-geojson.py > $@
